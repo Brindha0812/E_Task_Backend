@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -35,12 +34,12 @@ public class BlogController {
         return ResponseEntity.ok(blogs);
     }
 
-    // Get a blog by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<BlogCard> getBlogById(@PathVariable String id) {
-        Optional<BlogCard> blogCard = blogService.getBlogById(String.valueOf(id));
-        return blogCard.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
+// Get a blog by ID
+//    @GetMapping("/{id}")
+//    public ResponseEntity<BlogCard> getBlogById(@PathVariable String id) {
+//        Optional<BlogCard> blogCard = blogService.getBlogById(String.valueOf(id));
+//        return blogCard.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+//    }
 
     // Update a blog
     @PostMapping("update/{id}")
