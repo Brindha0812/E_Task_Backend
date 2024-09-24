@@ -1,14 +1,18 @@
 package com.task.b2b.persistence.controller;
 
 import com.task.b2b.persistence.entity.BlogCard;
+import com.task.b2b.persistence.model.BlogResponse;
 import com.task.b2b.persistence.service.BlogService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Optional;
 
 @CrossOrigin
@@ -21,9 +25,11 @@ public class BlogController {
 
     // Create a new blog
     @PostMapping
-    public ResponseEntity<BlogCard> createBlog(@RequestBody BlogCard blogCard) {
+    public ResponseEntity<BlogResponse> createBlog(@Valid @RequestBody BlogCard blogCard) {
         BlogCard savedBlog = blogService.saveOrUpdate(blogCard);
-        return ResponseEntity.ok(savedBlog);
+
+        BlogResponse response = new BlogResponse("Blog created successfully.", savedBlog);
+        return ResponseEntity.ok(response);
     }
 
     // Update a blog
@@ -41,13 +47,13 @@ public class BlogController {
 
     // Delete a blog by ID
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<Void> deleteBlogById(@PathVariable String id) {
+    public ResponseEntity<String> deleteBlogById(@PathVariable String id) {
 
-        if (blogService.getBlogById(String.valueOf(id)).isEmpty()) {
-            return ResponseEntity.notFound().build();
+        if (blogService.getBlogById(id).isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Blog with id " + id + " not found.");
         }
         blogService.deleteBlogById(String.valueOf(id));
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Blog deleted successfully.");
     }
 
     // Get all blogs
@@ -58,13 +64,6 @@ public class BlogController {
         Pageable pageable = PageRequest.of(page, size);
         Page<BlogCard> blogs = blogService.getAllBlogs(pageable);
         return ResponseEntity.ok(blogs);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<BlogCard> getBlogById(@PathVariable String id) {
-        Optional<BlogCard> blog = blogService.getBlogById(id);
-        return blog.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Get all blogs with sorting

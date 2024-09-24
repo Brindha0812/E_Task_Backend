@@ -40,12 +40,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Optional<BlogCard> getBlogById(String id) {
         try {
-            Optional<BlogCard> blog = blogCardRepository.findById(id);
-            if (blog.isPresent()) {
-                return blog;
-            } else {
-                throw new BlogNotFoundException("Blog with id " + id + " not found");
-            }
+            return blogCardRepository.findById(id);
         } catch (Exception e) {
             throw new BlogServiceException("Error occurred while retrieving the blog with id " + id, e);
         }
