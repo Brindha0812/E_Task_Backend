@@ -4,9 +4,11 @@ import com.task.b2b.persistence.entity.BlogCard;
 import com.task.b2b.persistence.repo.BlogCardRepo;
 import com.task.b2b.persistence.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+
 import java.util.Optional;
 
 @Component
@@ -21,8 +23,8 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<BlogCard> getAllBlogs() {
-        return blogCardRepository.findAll();
+    public Page<BlogCard> getAllBlogs(Pageable pageable) {
+        return blogCardRepository.findAll(pageable);
     }
 
     @Override
