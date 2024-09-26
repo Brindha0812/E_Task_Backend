@@ -1,12 +1,43 @@
 package com.task.b2b.persistence.model;
 
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class BlogCardView {
+    private String id;
+    private String title;
+    private String shortDescription;
+    private String fullDescription;
 
-    private String blogHeading;
-    private String description;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+
+    public String getFullDescription() {
+        return fullDescription;
+    }
+
+    public void setFullDescription(String fullDescription) {
+        this.fullDescription = fullDescription;
+    }
+
 }
