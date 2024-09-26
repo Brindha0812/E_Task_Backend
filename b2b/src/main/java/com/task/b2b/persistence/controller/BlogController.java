@@ -1,6 +1,7 @@
 package com.task.b2b.persistence.controller;
 
 import com.task.b2b.persistence.entity.BlogCard;
+import com.task.b2b.persistence.model.BlogCardView;
 import com.task.b2b.persistence.model.BlogResponse;
 import com.task.b2b.persistence.service.BlogService;
 import jakarta.validation.Valid;
@@ -13,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -58,22 +58,22 @@ public class BlogController {
 
     // Get all blogs
     @GetMapping("/all")
-    public ResponseEntity<Page<BlogCard>> getAllBlogs(@RequestParam(defaultValue = "0") int page,
-                                                      @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<Page<BlogCardView>> getAllBlogs(@RequestParam(defaultValue = "0") int page,
+                                                          @RequestParam(defaultValue = "10") int size) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<BlogCard> blogs = blogService.getAllBlogs(pageable);
+        Page<BlogCardView> blogs = blogService.getAllBlogs(pageable);
         return ResponseEntity.ok(blogs);
     }
 
     // Get all blogs with sorting
     @GetMapping("/all/sort")
-    public ResponseEntity<Page<BlogCard>> getAllBlogs(@RequestParam(defaultValue = "0") int page,
-                                                      @RequestParam(defaultValue = "10") int size,
-                                                      @RequestParam(defaultValue = "id") String sortBy) {
+    public ResponseEntity<Page<BlogCardView>> getAllBlogs(@RequestParam(defaultValue = "0") int page,
+                                                          @RequestParam(defaultValue = "10") int size,
+                                                          @RequestParam(defaultValue = "id") String sortBy) {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
-        Page<BlogCard> blogs = blogService.getAllBlogs(pageable);
+        Page<BlogCardView> blogs = blogService.getAllBlogs(pageable);
         return ResponseEntity.ok(blogs);
     }
 
